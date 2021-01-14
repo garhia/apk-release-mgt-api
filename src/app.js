@@ -21,15 +21,20 @@ const startApplication = async () => {
   });
 
   app.post('/apk/transfer-to-test', async (req, res) => {
-
+    const result = await apkService.moveToTest(req.body.id);
+    if (!result) return res.status(400).json('Invalid Id.');
+    res.status(200).json(result);
   });
 
   app.post('/apk/transfer-to-production', async (req, res) => {
-
+    const result = await apkService.moveToProduction();
+    if (!result) return res.status(400).json('Nothing in test to move.');
+    res.status(200).json(result);
   });
 
   app.get('/apk', async (req, res) => {
-
+    const result = await apkService.getApks(req.body);
+    res.status(200).json(result);
   });
 
   app.get('/', (req, res) => {
